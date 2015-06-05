@@ -1,0 +1,17 @@
+{
+  "name": "hapi-aws-lambda",
+  "version": "0.0.1",
+  "description": "Call AWS lambda functions from your hapi app!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Matt Harrison",
+    "email": "hi@matt-harrison.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "hapi": "^8.6.0"
+  }
+}
