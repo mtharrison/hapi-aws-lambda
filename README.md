@@ -6,71 +6,77 @@ Call AWS lambda functions from your hapi apps! And get all the goodness of serve
 Installation
 ------------
 
-	var Hapi = require('hapi');
+```javascript
+var Hapi = require('hapi');
 
-	var server = new Hapi.Server();
-	server.connection({ port: 4000 });
+var server = new Hapi.Server();
+server.connection({ port: 4000 });
 
-	server.register({
-		register: require('hapi-aws-lambda'),
-		options: {
-			config: {
-				region: 'us-east-1',
-				credentials: {
-					accessKeyId: 'XXX',
-					secretAccessKey: 'XXX'
-				}
+server.register({
+	register: require('hapi-aws-lambda'),
+	options: {
+		config: {
+			region: 'us-east-1',
+			credentials: {
+				accessKeyId: 'XXX',
+				secretAccessKey: 'XXX'
 			}
 		}
-	}, function (err) {
+	}
+}, function (err) {
 
-		if (err) {
-			throw err;
-		}
+	if (err) {
+		throw err;
+	}
 
-		// Use it here!
+	// Use it here!
 
-		server.start(function () {
-			console.log('Server started!');
-		});
+	server.start(function () {
+		console.log('Server started!');
 	});
+});
+```
 
 Usage
 -----
 
 **The lamda handler**
 
-	server.route({
-		method: 'GET',
-		path: '/',
-		handler: {
-			lambda: {
-				func: 'myExampleFunction', // short name or full arn
-				payload: { name: 'matt' }
-			}
+``` javascript
+server.route({
+	method: 'GET',
+	path: '/',
+	handler: {
+		lambda: {
+			func: 'myExampleFunction', // short name or full arn
+			payload: { name: 'matt' }
 		}
-	});
+	}
+});
+```
 
 **The lamda server method (free caching for your lambdas!)**
 
-	server.lambda('myExampleFunction', {
-		cache: {
-			expiresIn: 10000
-		}
-	});
+``` javascript
+server.lambda('myExampleFunction', {
+	cache: {
+		expiresIn: 10000
+	}
+});
 
-	server.route({
-		method: 'GET',
-		path: '/',
-		handler: function (request, reply) {
+server.route({
+	method: 'GET',
+	path: '/',
+	handler: function (request, reply) {
 
-			server.methods.myExampleFunction({ name: 'matt' }, function (err, data) {
+		server.methods.myExampleFunction({ name: 'matt' }, function (err, data) {
 
-				if (err) {
-					throw err;
-				}
+			if (err) {
+				throw err;
+			}
 
-				reply(data);
-			});
-		}
-	});
+			reply(data);
+		});
+	}
+});
+```
