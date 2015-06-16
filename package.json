@@ -4,7 +4,7 @@
   "description": "Call AWS lambda functions from your hapi app!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab -t 100 -a code -L"
   },
   "author": {
     "name": "Matt Harrison",
@@ -12,6 +12,8 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "hapi": "^8.6.0"
+    "code": "^1.4.0",
+    "hapi": "^8.6.1",
+    "lab": "^5.10.0"
   }
 }

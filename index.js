@@ -6,81 +6,81 @@ var internals = {};
 
 internals.lambdaHandler = function (lambda) {
 
-	return function (route, options) {
+    return function (route, options) {
 
-		return function (request, reply) {
-			
-			lambda.invoke({
-				FunctionName: options.func,
-				Payload: JSON.stringify(options.payload)
-			}, 
-			function (err, data) {
+        return function (request, reply) {
 
-				if (err) {
-					throw err;
-				}
+            lambda.invoke({
+                FunctionName: options.func,
+                Payload: JSON.stringify(options.payload)
+            },
+            function (err, data) {
 
-				try {
-					var payload = JSON.parse(data.Payload);
-				} catch (e) {
-					throw e;
-				}
+                if (err) {
+                    throw err;
+                }
 
-				reply(payload);
-			});
-		}
-	};
+                try {
+                    var payload = JSON.parse(data.Payload);
+                } catch (e) {
+                    throw e;
+                }
+
+                reply(payload);
+            });
+        };
+    };
 };
 
 
 internals.lambdaMethod = function (lambda, server) {
 
-	return function (name, options) {
+    return function (name, options) {
 
-		var method = function (payload, next) {
+        var method = function (payload, next) {
 
-			lambda.invoke({
-				FunctionName: name,
-				Payload: JSON.stringify(payload)
-			}, 
-			function (err, data) {
+            lambda.invoke({
+                FunctionName: name,
+                Payload: JSON.stringify(payload)
+            },
+            function (err, data) {
 
-				if (err) {
-					return next(err);
-				}
+                if (err) {
+                    return next(err);
+                }
 
-				try {
-					var payload = JSON.parse(data.Payload);
-				} catch (e) {
-					return next(e);
-				}
+                try {
+                    var payload = JSON.parse(data.Payload);
+                } catch (e) {
+                    return next(e);
+                }
 
-				next(null, payload);
-			});
-		};
+                next(null, payload);
+            });
+        };
 
-		options.generateKey = function (payload) {
-		
-			return 'hii';
-		};
+        options.generateKey = function (payload) {
 
-		return server.method(name, method, options);
-	};
+            return 'hii';
+        };
+
+        return server.method(name, method, options);
+    };
 };
 
 
 exports.register = function (server, options, next) {
 
-	for (var i in options.config) {
-		AWS.config[i] = options.config[i];
-	}
+    for (var i in options.config) {
+        AWS.config[i] = options.config[i];
+    }
 
-	var lambda = new AWS.Lambda();
+    var lambda = new AWS.Lambda();
 
-	server.handler('lambda', internals.lambdaHandler(lambda));
-	server.decorate('server', 'lambda', internals.lambdaMethod(lambda, server));
+    server.handler('lambda', internals.lambdaHandler(lambda));
+    server.decorate('server', 'lambda', internals.lambdaMethod(lambda, server));
 
-	next();
+    next();
 };
 
 exports.register.attributes = require('./package');
