@@ -1,6 +1,6 @@
 {
     "name": "hapi-aws-lambda",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Call AWS lambda functions from your hapi app!",
     "main": "index.js",
     "scripts": {
