@@ -1,8 +1,8 @@
-var AWS = require('aws-sdk');
+'use strict';
 
+const AWS = require('aws-sdk');
 
-var internals = {};
-
+const internals = {};
 
 internals.lambdaHandler = function (lambda) {
 
@@ -14,19 +14,18 @@ internals.lambdaHandler = function (lambda) {
                 FunctionName: options.func,
                 Payload: JSON.stringify(options.payload)
             },
-            function (err, data) {
+            (err, data) => {
 
                 if (err) {
                     throw err;
                 }
 
                 try {
-                    var payload = JSON.parse(data.Payload);
-                } catch (e) {
+                    reply(JSON.parse(data.Payload));
+                }
+                catch (e) {
                     throw e;
                 }
-
-                reply(payload);
             });
         };
     };
@@ -37,25 +36,24 @@ internals.lambdaMethod = function (lambda, server) {
 
     return function (name, options) {
 
-        var method = function (payload, next) {
+        const method = function (payload, next) {
 
             lambda.invoke({
                 FunctionName: name,
                 Payload: JSON.stringify(payload)
             },
-            function (err, data) {
+            (err, data) => {
 
                 if (err) {
                     return next(err);
                 }
 
                 try {
-                    var payload = JSON.parse(data.Payload);
-                } catch (e) {
+                    next(null, JSON.parse(data.Payload));
+                }
+                catch (e) {
                     return next(e);
                 }
-
-                next(null, payload);
             });
         };
 
@@ -71,11 +69,11 @@ internals.lambdaMethod = function (lambda, server) {
 
 exports.register = function (server, options, next) {
 
-    for (var i in options.config) {
+    for (const i in options.config) {
         AWS.config[i] = options.config[i];
     }
 
-    var lambda = new AWS.Lambda();
+    const lambda = new AWS.Lambda();
 
     server.handler('lambda', internals.lambdaHandler(lambda));
     server.decorate('server', 'lambda', internals.lambdaMethod(lambda, server));

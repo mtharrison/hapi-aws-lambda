@@ -1,19 +1,29 @@
 {
-  "name": "hapi-aws-lambda",
-  "version": "0.0.2",
-  "description": "Call AWS lambda functions from your hapi app!",
-  "main": "index.js",
-  "scripts": {
-    "test": "lab -t 100 -a code -L"
-  },
-  "author": {
-    "name": "Matt Harrison",
-    "email": "hi@matt-harrison.com"
-  },
-  "license": "ISC",
-  "devDependencies": {
-    "code": "^1.4.0",
-    "hapi": "^8.6.1",
-    "lab": "^5.10.0"
-  }
+    "name": "hapi-aws-lambda",
+    "version": "0.0.3",
+    "description": "Call AWS lambda functions from your hapi app!",
+    "main": "index.js",
+    "scripts": {
+        "test": "lab -t 100 -a code -L"
+    },
+    "author": {
+        "name": "Matt Harrison",
+        "email": "hi@matt-harrison.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:mtharrison/hapi-aws-lambda.git"
+    },
+    "license": "BSD-3-Clause",
+    "devDependencies": {
+        "code": "2.x.x",
+        "hapi": "13.x.x",
+        "lab": "8.x.x"
+    },
+    "dependencies": {
+        "aws-sdk": "^2.2.33"
+    },
+    "engines": {
+        "node": ">=4.0.0"
+    }
 }

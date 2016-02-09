@@ -7,9 +7,9 @@ Installation
 ------------
 
 ```javascript
-var Hapi = require('hapi');
+const Hapi = require('hapi');
 
-var server = new Hapi.Server();
+const server = new Hapi.Server();
 server.connection({ port: 4000 });
 
 server.register({
@@ -23,7 +23,7 @@ server.register({
 			}
 		}
 	}
-}, function (err) {
+}, (err) => {
 
 	if (err) {
 		throw err;
@@ -31,7 +31,7 @@ server.register({
 
 	// Use it here!
 
-	server.start(function () {
+	server.start(() => {
 		console.log('Server started!');
 	});
 });
@@ -69,7 +69,7 @@ server.route({
 	path: '/',
 	handler: function (request, reply) {
 
-		server.methods.myExampleFunction({ name: 'matt' }, function (err, data) {
+		server.methods.myExampleFunction({ name: 'matt' }, (err, data) => {
 
 			if (err) {
 				throw err;

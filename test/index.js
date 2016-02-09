@@ -1,21 +1,20 @@
+'use strict';
+
 // Load modules
 
-var Lab = require('lab');
-var Code = require('code');
-var Injoi = require('..');
+const Lab = require('lab');
+const Code = require('code');
 
 // Test shortcuts
 
-var lab = exports.lab = Lab.script();
-var before = lab.before;
-var after = lab.after;
-var describe = lab.describe;
-var it = lab.it;
-var expect = Code.expect;
+const lab = exports.lab = Lab.script();
+const describe = lab.describe;
+const it = lab.it;
+const expect = Code.expect;
 
-describe('hapi-aws-lambda', function () {
+describe('hapi-aws-lambda', () => {
 
-    it('can do basic math', function (done) {
+    it('can do basic math', (done) => {
 
         expect(1).to.equal(1);
         done();

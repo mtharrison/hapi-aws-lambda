@@ -1,6 +1,8 @@
-var Hapi = require('hapi');
+'use strict';
 
-var server = new Hapi.Server();
+const Hapi = require('hapi');
+
+const server = new Hapi.Server();
 server.connection({ port: 4000 });
 
 server.register({
@@ -14,7 +16,7 @@ server.register({
             }
         }
     }
-}, function (err) {
+}, (err) => {
 
     server.lambda('myExampleFunction', {
         cache: {
@@ -38,7 +40,7 @@ server.register({
         path: '/method',
         handler: function (request, reply) {
 
-            server.methods.myExampleFunction({ name: 'matt' }, function (err, data) {
+            server.methods.myExampleFunction({ name: 'matt' }, (err, data) => {
 
                 if (err) {
                     throw err;
@@ -53,7 +55,7 @@ server.register({
         throw err;
     }
 
-    server.start(function () {
+    server.start(() => {
 
         console.log('Server started!');
     });
